@@ -23,13 +23,17 @@ class IbovespaPreprocessor:
         remove_outliers: bool = False,
         adjust_for_inflation: bool = False,
     ) -> pd.DataFrame:
-        """Preprocess the Ibovespa time series, making it usable for modeling.
+        """Preprocess Ibovespa time series for financial modeling.
 
         :param df: Ibovespa time series
         :type df: pd.DataFrame
-        :return: Preprocessed Ibovespa time series
+        :param remove_outliers: If True, remove 2008 financial crisis and COVID-19 pandemic periods
+        :type remove_outliers: bool
+        :param adjust_for_inflation: If True, adjust prices to real terms using IPCA inflation index
+        :type adjust_for_inflation: bool
+        :return: Preprocessed Ibovespa DataFrame ready for modeling
         :rtype: DataFrame
-        """
+        """  # noqa: E501
         df = self._null_filling(df)
         df = self._duplicated_fix(df)
         df = df.drop([Col.max, Col.min, Col.open, Col.vol], axis=1)
