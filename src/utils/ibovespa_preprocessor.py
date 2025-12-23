@@ -1,4 +1,4 @@
-"""Script for the module TimeSeriesPreprocessor."""
+"""Script for the module IbovespaPreprocessor."""
 
 # ruff: noqa: DTZ001, G004
 import logging
@@ -13,7 +13,7 @@ class IbovespaPreprocessor:
     """Module responsible to preprocess the Ibovespa time series data usable for modeling."""  # noqa: E501
 
     def __init__(self) -> None:
-        """Initialize a TimeSeriesPreprocessor."""
+        """Initialize a IbovespaPreprocessor."""
         self.log = logging.getLogger(__name__)
 
     def preprocess(
