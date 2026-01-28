@@ -1,7 +1,7 @@
 """Script for the module LSTMModel."""
 
 import logging
-from dataclasses import dataclass
+from dataclasses import asdict, dataclass
 
 import numpy as np
 import pandas as pd
@@ -12,7 +12,7 @@ from tensorflow.keras.models import Sequential
 from utils.constants import Col
 
 
-@dataclass
+@dataclass(frozen=True)
 class TrainingConfig:
     """Configuration for LSTM model training."""
 
@@ -25,17 +25,20 @@ class TrainingConfig:
 class LSTMModel:
     """Module responsible for training a LSTM model."""
 
+    sequence_length: int
+    neurons: int
+    epochs: int
+    batch_size: int
+
     def __init__(self, config: TrainingConfig) -> None:
         """Initialize a configured LSTMModel."""
         self.log = logging.getLogger(__name__)
-
-        self.sequence_length = config.sequence_length
-        self.neurons = config.neurons
-        self.epochs = config.epochs
-        self.batch_size = config.batch_size
+        self.__dict__.update(asdict(config))
 
     def fit(
-        self, df_train: pd.DataFrame, df_test: pd.DataFrame,
+        self,
+        df_train: pd.DataFrame,
+        df_test: pd.DataFrame,
     ) -> tuple[NDArray, NDArray, NDArray, NDArray]:
         """Train and test the model.
 
