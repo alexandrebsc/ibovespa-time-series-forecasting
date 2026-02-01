@@ -24,6 +24,6 @@ class Col:
     month = "month"
     inflation = "inflation"
     acc_inflation = "accumulated_inflation"
-    # df train & test
+    # df train & validadtion
     ds = "ds"
     y = "y"

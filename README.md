@@ -35,7 +35,7 @@ Rather than aiming to outperform the market, the primary goal is to demonstrate 
 ### Time Series Strategy
 
 - Strict chronological splitting (no shuffling)
-- Train / validation / test separation respecting time order
+- Train and validation separation respecting time order
 - Feature generation using only past information
 - Explicit baseline comparison
 

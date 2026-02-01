@@ -3,7 +3,7 @@
 # ruff: noqa: D103
 import logging
 
-from utils.config import OPTIMAL_TEST_DAYS, OPTIMAL_TRAINING_CONIFG
+from utils.config import OPTIMAL_TRAINING_CONIFG, OPTIMAL_VALIDATION_DAYS
 from utils.constants import RANDOM_SEED
 from utils.evaluator import Evaluator
 from utils.forecasting_pipeline import ForecastingPipeline
@@ -19,7 +19,7 @@ def main() -> None:
     ForecastingPipeline(
         loader=IbovespaLoader(),
         preprocessor=IbovespaPreprocessor(),
-        splitter=TimeSeriesSplitter(test_days=OPTIMAL_TEST_DAYS),
+        splitter=TimeSeriesSplitter(validation_days=OPTIMAL_VALIDATION_DAYS),
         model=LSTMModel(OPTIMAL_TRAINING_CONIFG),
         evaluator=Evaluator(),
         random_seed=RANDOM_SEED,

@@ -1,6 +1,6 @@
 """Script for exploratory data analysis(EDA)."""
 
-# ruff: noqa: D103, G004
+# ruff: noqa: D103
 
 import logging
 import warnings
@@ -51,34 +51,34 @@ def df_analysis(df: pd.DataFrame) -> None:
         df[Col.var] = df[Col.close].pct_change() * 100.0
         stat, p = shapiro(df[Col.var].dropna())
 
-        logger.info(f"Statistics (W): {stat:.4f}")
-        logger.info(f"Value p: {p:.4f}")
+        logger.info("Statistics (W): %.4f", stat)
+        logger.info("Value p: %.4f", p)
         logger.info("")
 
     def adf_test() -> None:
         adf_result = adfuller(df[Col.close])
 
-        logger.info(f"ADF Statistic: {adf_result[0]:.4f}")
-        logger.info(f"Value p: {adf_result[1]:.4f}")
+        logger.info("ADF Statistic: %.4f", adf_result[0])
+        logger.info("Value p: %.4f", adf_result[1])
         logger.info("Critical values:")
 
         for key, value in adf_result[4].items():
-            logger.info(f"    {key}: {value:.4f}")
+            logger.info("\t%s: %.4f", key, value)
 
     def null_analysis() -> None:
         df_nulls = df.isna()
 
-        logger.info(f"Nulls quantity:\n{df_nulls.sum()}")
+        logger.info("Nulls quantity:\n%s", df_nulls.sum())
         if df_nulls[Col.vol].any():
-            logger.info(f"Nulls in {Col.vol} column:\n{df[df_nulls[Col.vol]]}")
+            logger.info("Nulls in %s column:\n%s", Col.vol, df[df_nulls[Col.vol]])
         logger.info("")
 
     def duplicated_analysis() -> None:
         df_duplicated = df.duplicated()
 
-        logger.info(f"Duplicated quantity: {df_duplicated.sum()}")
+        logger.info("Duplicated quantity: %s", df_duplicated.sum())
         if df_duplicated.sum() > 0:
-            logger.info(f"Duplicated rows:\n{df[df_duplicated]}")
+            logger.info("Duplicated rows:\n%s", df[df_duplicated])
         logger.info("")
 
     logger.info("=" * 60)
@@ -90,10 +90,10 @@ def df_analysis(df: pd.DataFrame) -> None:
     logger.info("\n")
 
     logger.info("> Data Sample (first 3 rows):")
-    logger.info(f"\n{df.head(3)}\n")
+    logger.info("\n%s\n", df.head(3))
 
     logger.info("> Descriptive Statistics:")
-    logger.info(f"\n{df.describe()}\n")
+    logger.info("\n%s\n", df.describe())
 
     logger.info("> Null Analysis:")
     null_analysis()

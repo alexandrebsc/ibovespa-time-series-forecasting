@@ -33,16 +33,20 @@ class ForecastingPipeline:
         self.random_seed = random_seed
 
     def run(self) -> None:
-        """Pipeline that load data, preprocess it, split in training and test datasets, train the model and evaluate it."""  # noqa: E501
+        """Run pipeline.
+
+        The pipeline load data, preprocess it, split in training
+        and validadtion datasets, train the model and evaluate it.
+        """
         self.__set_random_seeds()
 
         df_raw = self.loader.load()
         df_processed = self.preprocessor.preprocess(df_raw.copy())
-        df_train, df_test = self.splitter.split(
+        df_train, df_validation = self.splitter.split(
             df_raw=df_raw,
             df_processed=df_processed,
         )
-        self.predictions_and_y = self.model.fit(df_train, df_test)
+        self.predictions_and_y = self.model.fit(df_train, df_validation)
 
         if self.evaluator is not None:
             self.evaluator.evaluate(*self.predictions_and_y)

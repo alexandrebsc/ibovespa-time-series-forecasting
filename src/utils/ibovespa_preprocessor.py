@@ -1,6 +1,6 @@
 """Script for the module IbovespaPreprocessor."""
 
-# ruff: noqa: DTZ001, G004
+# ruff: noqa: DTZ001
 import logging
 from datetime import datetime
 
@@ -10,7 +10,7 @@ from utils.constants import IPCA_HIST_CSV_PATH, Col
 
 
 class IbovespaPreprocessor:
-    """Module responsible to preprocess the Ibovespa time series data usable for modeling."""  # noqa: E501
+    """Module that preprocess the Ibovespa time series data usable for modeling."""
 
     def __init__(self) -> None:
         """Initialize a IbovespaPreprocessor."""
@@ -27,13 +27,15 @@ class IbovespaPreprocessor:
 
         :param df: Ibovespa time series
         :type df: pd.DataFrame
-        :param remove_outliers: If True, remove 2008 financial crisis and COVID-19 pandemic periods
+        :param remove_outliers: If True, remove 2008 financial crisis and COVID-19
+            pandemic periods
         :type remove_outliers: bool
-        :param adjust_for_inflation: If True, adjust prices to real terms using IPCA inflation index
+        :param adjust_for_inflation: If True, adjust prices to real terms using IPCA
+            inflation index
         :type adjust_for_inflation: bool
         :return: Preprocessed Ibovespa DataFrame ready for modeling
         :rtype: DataFrame
-        """  # noqa: E501
+        """
         df = self._null_filling(df)
         df = self._duplicated_fix(df)
         df = df.drop([Col.max, Col.min, Col.open, Col.vol], axis=1)
@@ -55,9 +57,10 @@ class IbovespaPreprocessor:
         if n_duplicated > 0:
             dropped_dates = df.index[duplicated_mask]
             self.log.warning(
-                f"{n_duplicated} duplicated rows detected based on "
-                f"{price_cols}. Dropping occurrences: "
-                f"{dropped_dates.tolist()}",
+                "%s duplicated rows detected based on %s. Dropping occurrences: %s",
+                n_duplicated,
+                price_cols,
+                dropped_dates.tolist(),
             )
 
         return df.loc[~duplicated_mask]
@@ -70,8 +73,8 @@ class IbovespaPreprocessor:
             return df
 
         self.log.warning(
-            f"{n_nulls} missing values detected. "
-            "Filling with rolling mean of previous 5 days.",
+            "%s missing values detected. Filling with rolling mean of previous 5 days.",
+            n_nulls,
         )
 
         rolling_mean = df.shift(1).rolling(window=5, min_periods=1).mean()
@@ -162,8 +165,8 @@ class IbovespaPreprocessor:
         null_found = df_inflation.isna().sum().iloc[0]
         if null_found:
             self.log.warning(
-                f"{null_found} months without inflation values. "
-                "Zero will be assumed for these.",
+                "%s months without inflation values. Zero will be assumed for these.",
+                null_found,
             )
             df_inflation = df_inflation.fillna(0)
 

@@ -38,24 +38,25 @@ class LSTMModel:
     def fit(
         self,
         df_train: pd.DataFrame,
-        df_test: pd.DataFrame,
+        df_validation: pd.DataFrame,
     ) -> tuple[NDArray, NDArray, NDArray, NDArray]:
-        """Train and test the model.
+        """Train and validate the model.
 
         :param df_train: Training Dataframe
         :type df_train: pd.DataFrame
-        :param df_test: Test Dataframe
-        :type df_test: pd.DataFrame
-        :return: In the following order: y_train, predicted_train_values, y_validate and predicted_validation_values
+        :param df_validation: Validation Dataframe
+        :type df_validation: pd.DataFrame
+        :return: In the following order: y_train, predicted_train_values, y_validate
+            and predicted_validation_values
         :rtype: tuple[NDArray, NDArray, NDArray, NDArray]
-        """  # noqa: E501
+        """
         x_train, y_train = self._create_input_lstm_sequences(
             df_train[Col.y].values,
             df_train[Col.y].values,
         )
         x_validate, y_validate = self._create_input_lstm_sequences(
-            df_test[Col.y].values,
-            df_test[Col.y].values,
+            df_validation[Col.y].values,
+            df_validation[Col.y].values,
         )
 
         x_train = x_train.reshape((x_train.shape[0], x_train.shape[1], 1))

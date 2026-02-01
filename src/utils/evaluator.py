@@ -1,7 +1,5 @@
 """Script for the module Evaluator."""
 
-# ruff: noqa: G004
-
 import logging
 
 import matplotlib.pyplot as plt
@@ -147,10 +145,10 @@ class Evaluator:
         r2 = r2_score(y_actual, y_predicted)
 
         if print_info:
-            self.log.info(f"\n{model_name} Performance Metrics:")
-            self.log.info(f"Mean Squared Error (MSE): {mse:.6f}")
-            self.log.info(f"Mean Absolute Error (MAE): {mae:.6f}")
-            self.log.info(f"Root Mean Squared Error (RMSE): {rmse:.6f}")
-            self.log.info(f"R-squared (R2) Score: {r2:.6f}")
+            self.log.info("\n%s Performance Metrics:", model_name)
+            self.log.info("Mean Squared Error (MSE): %.6f", mse)
+            self.log.info("Mean Absolute Error (MAE): %.6f", mae)
+            self.log.info("Root Mean Squared Error (RMSE): %.6f", rmse)
+            self.log.info("R-squared (R2) Score: %.6f", r2)
 
         return mse, mae, rmse, r2
