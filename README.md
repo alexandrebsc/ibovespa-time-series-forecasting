@@ -48,6 +48,32 @@ The baseline is intentionally simple but very strong for financial time series a
 
 ---
 
+## 🔁 Cross-Validation Strategy
+
+### Time-Series Cross-Validation (`CrossValidator`)
+
+In addition to a single train/validation split, the project includes a **dedicated time-series cross-validation module** implemented in `utils/cross_validator.py`.
+
+Unlike standard k-fold cross-validation (which shuffles data and breaks temporal order), this implementation uses a **rolling / expanding window strategy**, fully respecting the chronological nature of financial time series.
+
+#### Key Characteristics
+
+* **Strictly time-aware**:
+  No shuffling and no future information leakage.
+* **Rolling validation windows**:
+  Each fold validates on a future window while training on all prior data.
+* **Fixed validation horizon**:
+  Each fold evaluates the model on the same number of future days.
+* **Sequence-length safe**:
+  Validation windows include the required lookback period for LSTM sequences.
+* **Metric aggregation**:
+  Reports per-fold metrics as well as average and standard deviation across folds.
+
+This module reinforces the project’s core philosophy:
+**methodological correctness over headline performance**.
+
+---
+
 ## 🚀 How to Run
 
 ### 1. Environment Setup
