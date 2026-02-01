@@ -94,9 +94,9 @@ class LSTMModel:
         """Return the model. Must fit() first."""
         return self.model
 
-    def save_model(self) -> None:
+    def save_model(self, path: str = "artifacts/model.keras") -> None:
         """Save the model."""
-        self.model.save("artifacts/model.keras")
+        self.model.save(path)
 
     def _create_input_lstm_sequences(
         self,
