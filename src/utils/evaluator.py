@@ -63,11 +63,6 @@ class Evaluator:
         """
         self.log.info("Naive Persistence Baseline Model Evaluation")
 
-        naive_train_predictions = np.zeros_like(y_train)
-        naive_train_predictions[0] = y_train[0]
-        for i in range(1, len(y_train)):
-            naive_train_predictions[i] = y_train[i - 1]
-
         naive_validation_predictions = np.zeros_like(y_validate)
         if len(y_train) > 0:
             naive_validation_predictions[0] = y_train[-1]
@@ -97,26 +92,6 @@ class Evaluator:
 
         fig.tight_layout()
         plt.show()
-
-    def _plot_predictions_for_validation(self) -> None:
-        """Plot the model predictions for validation."""
-        fig, ax = plt.subplots(figsize=(10, 6))
-
-        ax.set_title("Previsões LSTM para dados de validação")
-        ax.plot(self.y_validate, ".b", label="Real não conhecido")
-        ax.plot(self.predicted_validation_values, ".r", label="Previsto")
-        ax.legend()
-
-        fig.tight_layout()
-        plt.show()
-
-    def _get_train_mse(self) -> float:
-        """Get the training MSE.
-
-        :return: The training MSE
-        :rtype: float
-        """
-        return mean_squared_error(self.y_train, self.predicted_train_values)
 
     def performance_metrics_info(
         self,

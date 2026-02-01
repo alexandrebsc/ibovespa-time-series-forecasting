@@ -32,7 +32,6 @@ class LSTMModel:
 
     def __init__(self, config: TrainingConfig) -> None:
         """Initialize a configured LSTMModel."""
-        self.log = logging.getLogger(__name__)
         self.__dict__.update(asdict(config))
 
     def fit(
